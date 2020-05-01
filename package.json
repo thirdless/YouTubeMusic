@@ -1,0 +1,36 @@
+{
+    "name": "ytm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "core.js",
+    "scripts": {
+        "postinstall": "install-app-deps",
+        "start": "npm install && electron .",
+        "pack": "build --dir",
+        "dist": "build"
+    },
+    "author": "",
+    "devDependencies": {
+        "electron": "^2.0.2",
+        "electron-builder": "^20.15.1"
+    },
+    "optionalDependencies": {},
+    "dependencies": {
+        "discord-rich-presence": "0.0.8"
+    },
+    "build": {
+        "productName": "YouTube Music",
+        "appId": "smuwn.ytm",
+        "win": {
+            "target": [
+                "portable"
+            ]
+        },
+        "portable": {
+            "artifactName": "ytm.exe"
+        },
+        "directories": {
+            "output": "output"
+        }
+    }
+}
