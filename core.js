@@ -34,7 +34,7 @@ function createWindow() {
 app.commandLine.appendSwitch('enable-features', 'HardwareMediaKeyHandling');
 app.on("ready", createWindow);
 
-ipcMain.on("ytm-discord-rp", (e, message) => {
+function handlediscord(e, message){
     jsonparse = JSON.parse(message);
     jsonparse.largeImageKey = "logo";
     jsonparse.smallImageKey = "smuwn";
@@ -50,13 +50,16 @@ ipcMain.on("ytm-discord-rp", (e, message) => {
         smallImageText: jsonparse.smallImageText,
         smallImageKey: jsonparse.smallImageKey,
         largeImageKey: jsonparse.largeImageKey
-    });;
-});
+    });
+}
+
+ipcMain.on("ytm-discord-rp", handlediscord);
 
 ipcMain.on("ytm-close", (e, message) => {
     if(message === "close") app.quit();
 });
 
 process.on('unhandledRejection', () => {
+    ipcMain.off("ytm-discord-rp", handlediscord);
     console.log("dumb uncaught promise rejection, thrown by defective discord-rpc module, that i cant do anything other than ignoring it");
 });
