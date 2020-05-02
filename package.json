@@ -3,15 +3,15 @@
     "version": "1.0.0",
     "description": "",
     "main": "core.js",
+    "author": "smuwn",
     "scripts": {
         "postinstall": "install-app-deps",
         "start": "npm install && electron .",
         "pack": "build --dir",
         "dist": "build"
     },
-    "author": "",
     "devDependencies": {
-        "electron": "^2.0.2",
+        "electron": "^7.1.0",
         "electron-builder": "^20.15.1"
     },
     "optionalDependencies": {},
