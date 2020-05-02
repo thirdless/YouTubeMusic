@@ -94,18 +94,16 @@ let search = (function(){
 
 // search end
 
-function removelisteners(){
+function closeapp(){
     searchel.removelisteners();
     document.querySelector("webview").removeEventListener("ipc-message", parseMsg);
+    ipcRenderer.send("ytm-close", "close");
 }
 
 function parseMsg(e){
     let message = e.channel;
 
-    if(message === msgstring + "close"){
-        removelisteners();
-        ipcRenderer.send("ytm-close", "close");
-    }
+    if(message === msgstring + "close") closeapp();
     else if(message === msgstring + "mini") win.minimize();
     else if(message === msgstring + "toggle") searchel.toggle();
     else if(!message.indexOf(msgstring + "discord")) ipcRenderer.send("ytm-discord-rp", message.replace(msgstring + "discord ", ""));

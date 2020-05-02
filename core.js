@@ -7,28 +7,31 @@ let win,
     jsonparse;
 
 function createWindow() {
-   win = new BrowserWindow({
-       width: 1100,
-       height: 700,
-       minHeight: 600,
-       minWidth: 900,
-       webPreferences: {
-           webSecurity: false,
-           nodeIntegration: false,
-           webviewTag: true,
-           preload: __dirname + "/page.js"
-       },
-       frame: false,
-       icon: __dirname + "resources/icon.ico"
-   });
-   win.loadURL(url.format ({
-      pathname: path.join(__dirname, 'page.html'),
-      protocol: 'file:',
-      slashes: true
-  }));
+    win = new BrowserWindow({
+    width: 1100,
+    height: 700,
+    minHeight: 600,
+    minWidth: 900,
+    webPreferences: {
+        webSecurity: false,
+        nodeIntegration: false,
+        webviewTag: true,
+        plugins: true,
+        preload: __dirname + "/page.js"
+    },
+    frame: false,
+    icon: __dirname + "resources/icon.ico"
+    });
+
+    win.loadURL(url.format ({
+        pathname: path.join(__dirname, 'page.html'),
+        protocol: 'file:',
+        slashes: true
+    }));
 }
 //app.disableHardwareAcceleration();
 
+app.commandLine.appendSwitch('enable-features', 'HardwareMediaKeyHandling');
 app.on("ready", createWindow);
 
 ipcMain.on("ytm-discord-rp", (e, message) => {
@@ -47,9 +50,13 @@ ipcMain.on("ytm-discord-rp", (e, message) => {
         smallImageText: jsonparse.smallImageText,
         smallImageKey: jsonparse.smallImageKey,
         largeImageKey: jsonparse.largeImageKey
-    });
- });
+    });;
+});
 
- ipcMain.on("ytm-close", (e, message) => {
+ipcMain.on("ytm-close", (e, message) => {
     if(message === "close") app.quit();
- });
+});
+
+process.on('unhandledRejection', () => {
+    console.log("dumb uncaught promise rejection, thrown by defective discord-rpc module, that i cant do anything other than ignoring it");
+});
